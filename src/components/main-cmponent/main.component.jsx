@@ -9,6 +9,7 @@ const MainComponent = () => {
 	const [quiz, setQuiz] = useState(false);
 	const [questions, setQuestions] = useState([])
 
+	console.log(questions)
 
 	useEffect(() => {
 		getData()
@@ -20,18 +21,17 @@ const MainComponent = () => {
 		setQuestions(data.results)
 
 	}
-	console.log("state below")
-	console.log(questions);
 
 	const startQuiz = () => {
 		setQuiz(true);
-		console.log("quiz started")
 	}
 
 	const questionsAnswers = questions.map((question) => <Questions
 		key={question.correct_answer}
 		question={question.question}
-		incorrectAnswers={question.incorrect_answers}
+		incorrectAnswers={
+			[question.correct_answer, question.incorrect_answers]
+		}
 		correctAnswer={question.correct_answer}
 	
 	/>)
@@ -39,7 +39,13 @@ const MainComponent = () => {
 	return (
 		<div className="main-background">
 			{quiz && <FirstPage startQuiz={startQuiz} />}
+			<div className="main-questions-answers">
 			{questionsAnswers}
+			</div>
+			
+			<div className="container-check-answers-btn">
+				<button className="check-unswers">Check answers</button>
+			</div>
 		</div>
 	)
 }

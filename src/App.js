@@ -7,7 +7,7 @@ function App() {
 	
 
   return (
-	  <main>Quizzlet
+	  <main>
 		  <MainComponent />
 	  </main>
   );
