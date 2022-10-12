@@ -32,14 +32,6 @@ const MainComponent = () => {
 		setQuiz(true);
 	}
 
-	const holdAnswer = (event,id) => {
-		console.log(event.target.innerText);
-		console.log("correct answer below")
-		console.log(id);
-	
-		
-	}
-
 	const questionsAnswers = questions.map((question) => <Questions
 		key={question.correct_answer}
 		question={question.question}
@@ -47,8 +39,7 @@ const MainComponent = () => {
 			[question.correct_answer, question.incorrect_answers]
 		}
 		correctAnswer={question.correct_answer}
-		holdAnswer={holdAnswer}
-		// holdAnswer={(event)=> holdAnswer(event, question.correct_answer)}
+		
 	
 	/>)
 

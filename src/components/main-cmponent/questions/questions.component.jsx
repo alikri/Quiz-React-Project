@@ -10,25 +10,27 @@ const Questions = (props) => {
 			isHeld: false
 		}
 	);
-	// const [valuePressed, setValuePressed] = useState(false);
+	
 
-	console.log("selected Indsex below");
-	console.log(selectedIndex);
 	const correctAnswerSeparately = props.incorrectAnswers;
 	// console.log(correctAnswerSeparately);
 	const answersMixed = correctAnswerSeparately.flat().sort();
-	console.log(answersMixed);
+	// console.log(answersMixed);
 
 
-	const toggleOption = (event) => {
+	const toggleOption = (event, correct) => {
 		let answer = event.target.innerText;
-		setSelectedIndex(prevValue => ({value: answer, isHeld: !prevValue.isHeld}))
+		setSelectedIndex(prevValue => ({ ...prevValue, value: answer, isHeld: true }))
+		console.log("correct answer and wrong answer next")
+		console.log(correct)
+		console.log(answer)
 	}
+
 
 	const answerOption = answersMixed.map((answer) => <button
 		key={answer.toString()}
-		onClick={(event) => [props.holdAnswer(event, props.correctAnswer), toggleOption(event)]}
-		style={{ backgroundColor: (selectedIndex.isHeld && answer === selectedIndex.value)? '#D6DBF5' : 'none'}}
+		onClick={(event) => toggleOption(event, props.correctAnswer)}
+		className={`${selectedIndex.isHeld && answer === selectedIndex.value? "btn-clicked": "none"}`}
 	>
 		 <Interweave content={answer} />
 		</button>)
