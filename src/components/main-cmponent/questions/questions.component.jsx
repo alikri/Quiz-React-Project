@@ -20,7 +20,7 @@ const Questions = (props) => {
 
 	const toggleOption = (event, correct) => {
 		let answer = event.target.innerText;
-		setSelectedIndex(prevValue => ({ ...prevValue, value: answer, isHeld: true }))
+		setSelectedIndex(prevValue => ({prevValue, value: answer, isHeld: true }))
 		console.log("correct answer and wrong answer next")
 		console.log(correct)
 		console.log(answer)
