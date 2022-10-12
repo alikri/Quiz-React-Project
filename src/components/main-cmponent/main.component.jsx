@@ -8,8 +8,6 @@ const MainComponent = () => {
 	const [quiz, setQuiz] = useState(false);
 	const [questions, setQuestions] = useState([])
 	const [answers, setAnswers] = useState([]);
-	const [myStyle, setMyStyle] = useState(false);
-	// console.log(questions);
 	console.log(answers);
 
 	useEffect(() => {
@@ -34,9 +32,11 @@ const MainComponent = () => {
 		setQuiz(true);
 	}
 
-	const holdAnswer = (event, id) => {
+	const holdAnswer = (event,id) => {
 		console.log(event.target.innerText);
+		console.log("correct answer below")
 		console.log(id);
+	
 		
 	}
 
@@ -47,8 +47,8 @@ const MainComponent = () => {
 			[question.correct_answer, question.incorrect_answers]
 		}
 		correctAnswer={question.correct_answer}
-		holdAnswer={(event)=> holdAnswer(event, question.correct_answer)}
-		myStyle={myStyle}
+		holdAnswer={holdAnswer}
+		// holdAnswer={(event)=> holdAnswer(event, question.correct_answer)}
 	
 	/>)
 
