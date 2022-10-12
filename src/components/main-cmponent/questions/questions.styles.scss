@@ -33,11 +33,16 @@
 			font-size: 12px;
 			padding: 5px 10px;
 			margin: 10px 10px 10px 0px;
-			background-color: transparent;
 			border-radius: 7.7px;
 			color: #293264;
 			font-weight: 700;
 			border: 0.5px solid #293264;
+			cursor: pointer;
 		}
+
+		.btn-clicked {
+			background-color: #D6DBF5;
+		}
+
 	}
 }

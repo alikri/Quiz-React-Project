@@ -2,18 +2,25 @@ import "./questions.styles.scss";
 import { Interweave} from "interweave";
 
 const Questions = (props) => {
+
+	
+
 	const correctAnswerSeparately = props.incorrectAnswers;
 	// console.log(correctAnswerSeparately);
 	const answersMixed = correctAnswerSeparately.flat().sort();
 	// console.log(answersMixed);
-	const answerOption = answersMixed.map((answer) => <button key={answer.toString()}> <Interweave content={answer} /> </button>)
+
+	const answerOption = answersMixed.map((answer) => <button
+		key={answer.toString()}
+		onClick={props.holdAnswer}
+		
+	>
+			<Interweave content={answer} />
+	</button>)
 
 	return (
 		<div className="quastion-answer-container">
 			<Interweave className="questions" content={props.question } />
-			{/* <div className="questions">
-			
-			</div> */}
 			<div>
 				<div className="answer-options-container">
 					{answerOption}
