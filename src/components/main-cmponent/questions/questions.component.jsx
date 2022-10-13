@@ -1,42 +1,43 @@
 import "./questions.styles.scss";
 import { Interweave } from "interweave";
 import { useState } from "react";
+import htmr from 'htmr';
 
 const Questions = (props) => {
-	console.log("show results")
-	console.log(props.showResults);
+	// console.log("show results")
+	// console.log(props.showResults);
 	const [selectedIndex, setSelectedIndex] = useState({
 			value: "",
 			isHeld: false
 		});
 	
-	console.log(selectedIndex);
+	// console.log(selectedIndex);
 
 	const correctAnswerSeparately = props.incorrectAnswers;
 	// console.log(correctAnswerSeparately);
 	const answersMixed = correctAnswerSeparately.flat().sort();
-	console.log(answersMixed);
+	// console.log(answersMixed);
 
 
 	const toggleOption = (event, correct) => {
-		console.log(event);
+		// console.log(event);
 		let answer = event.target.innerText;
 		
 		setSelectedIndex({value: answer, isHeld: true})
 		
-		console.log("answer ")
+		// console.log("answer ")
 		// console.log(correct)
-		console.log(answer)
+		// console.log(answer)
 	}
 
 
 	const answerOption = answersMixed.map((answer) => <button
 		key={answer.toString()}
-		onClick={(event) => [props.holdAnswer(event, props.correctAnswer),toggleOption(event, props.correctAnswer)]}
-		className={`${selectedIndex.isHeld && answer === selectedIndex.value ? "btn-clicked" : "none"} 
+		onClick={(event) => [props.holdAnswer(event, htmr(props.correctAnswer)),toggleOption(event, htmr(props.correctAnswer))]}
+		className={`${selectedIndex.isHeld && htmr(answer) === selectedIndex.value ? "btn-clicked" : "none"} 
 		${props.showResults && answer === props.correctAnswer ? "btn-correct" : "none"} 
-		${props.showResults && answer !== props.correctAnswer && answer === selectedIndex.value ? "btn-wrong" : "none"}
-		${props.showResults && answer !== props.correctAnswer && answer !== selectedIndex.value ? "left-btn" : "none"}`}
+		${props.showResults && answer !== props.correctAnswer && htmr(answer) === selectedIndex.value ? "btn-wrong" : "none"}
+		${props.showResults && answer !== props.correctAnswer && htmr(answer) !== selectedIndex.value ? "left-btn" : "none"}`}
 	>
 		 <Interweave content={answer} />
 		</button>)

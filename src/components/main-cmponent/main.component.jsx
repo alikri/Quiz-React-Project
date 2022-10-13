@@ -8,10 +8,9 @@ const MainComponent = () => {
 	const [quiz, setQuiz] = useState(false);
 	const [questions, setQuestions] = useState([])
 	const [answers, setAnswers] = useState([]);
-	// const [chosenOption, setChoisenOption] = useState([])
 	const [showResults, setShowResults] = useState(false);
 	const [count, setCount] = useState(0);
-	const [newGame, setNewGame] = useState(false)
+	const [newGame, setNewGame] = useState(false);
 
 	useEffect(() => {
 		getData()
@@ -22,7 +21,7 @@ const MainComponent = () => {
 		const data = await response.json();
 		setQuestions(data.results)
 		setAnswers(() => {
-			let arr = []
+			let arr = [];
 			let results = data.results;
 			for (let i = 0; i < results.length; i++) {
 				arr.push ([results[i].correct_answer, results[i].incorrect_answers]);
@@ -37,8 +36,6 @@ const MainComponent = () => {
 
 	
 	const holdAnswer = (event, id) => {
-		console.log(event.target.innerText);
-		console.log('useless fnc for now');
 		let answer = event.target.innerText;
 		if (answer === id) {
 			setCount(prevCount => prevCount + 1);
@@ -50,6 +47,8 @@ const MainComponent = () => {
 			setShowResults(true)
 		} else {
 			setShowResults(false);
+			setCount(0);
+			setQuestions([]);
 			setNewGame(prevValue => !prevValue);
 		}
 		
@@ -61,7 +60,7 @@ const MainComponent = () => {
 			[question.correct_answer, question.incorrect_answers]
 		}
 		correctAnswer={question.correct_answer}
-		holdAnswer={(event) => holdAnswer(event, question.correct_answer)}
+		holdAnswer={holdAnswer}
 		showResults={showResults}
 		newGame={newGame}
 	
@@ -69,7 +68,7 @@ const MainComponent = () => {
 
 	return (
 		<div className="main-background">
-			{quiz && <FirstPage startQuiz={startQuiz} />}
+			{!quiz && <FirstPage startQuiz={startQuiz} />}
 			<div className="main-questions-answers">
 			{questionsAnswers}
 			</div>
