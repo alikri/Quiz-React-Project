@@ -5,12 +5,9 @@ import { useState, useEffect } from "react";
 
 
 const MainComponent = () => {
-	const [quiz, setQuiz] = useState({
-		firstPage: false,
-		secondPage: true
-	});
 	
-	const [questions, setQuestions] = useState([])
+	const [quiz, setQuiz] = useState(false);
+	const [questions, setQuestions] = useState([]);
 	const [answers, setAnswers] = useState([]);
 	const [showResults, setShowResults] = useState(false);
 	const [count, setCount] = useState(0);
@@ -18,7 +15,7 @@ const MainComponent = () => {
 
 	useEffect(() => {
 		getData()
-	}, [newGame])
+	}, [newGame]);
 
 	async function getData() {
 		const response = await fetch("https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple");
@@ -35,7 +32,7 @@ const MainComponent = () => {
 	}
 
 	const startQuiz = () => {
-		setQuiz(prevValue => ({...prevValue, firstPage: !prevValue.firstPage, secondPage: !prevValue.secondPage}));
+		setQuiz(prevValue => !prevValue)
 	}
 
 	
@@ -55,28 +52,24 @@ const MainComponent = () => {
 			setQuestions([]);
 			setNewGame(prevValue => !prevValue);
 		}
-		
 	}
 	const questionsAnswers = questions.map((question) => <Questions
 		key={question.correct_answer}
 		question={question.question}
-		incorrectAnswers={
-			[question.correct_answer, question.incorrect_answers]
-		}
+		incorrectAnswers={[question.correct_answer, question.incorrect_answers]}
 		correctAnswer={question.correct_answer}
 		holdAnswer={holdAnswer}
 		showResults={showResults}
 		newGame={newGame}
-	
 	/>)
 
 	return (
 		<div className="main-background">
-			{!quiz.firstPage && <FirstPage startQuiz={startQuiz} />}
+			{!quiz && <FirstPage startQuiz={startQuiz} />}
 			<div className="main-questions-answers">
-			{questionsAnswers}
+			{quiz && questionsAnswers}
 			</div>
-			{!quiz.secondPage && <div className="container-check-answers-btn">
+			{quiz && <div className="container-check-answers-btn">
 				{showResults && <h2>You scored {count}/{answers.length} correct answers</h2>}
 				<button className="check-answers"
 				onClick={toggleResult}

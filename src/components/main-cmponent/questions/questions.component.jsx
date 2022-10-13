@@ -4,30 +4,17 @@ import { useState } from "react";
 import htmr from 'htmr';
 
 const Questions = (props) => {
-	// console.log("show results")
-	// console.log(props.showResults);
 	const [selectedIndex, setSelectedIndex] = useState({
 			value: "",
 			isHeld: false
 		});
-	
-	// console.log(selectedIndex);
 
 	const correctAnswerSeparately = props.incorrectAnswers;
-	// console.log(correctAnswerSeparately);
 	const answersMixed = correctAnswerSeparately.flat().sort();
-	// console.log(answersMixed);
-
 
 	const toggleOption = (event, correct) => {
-		// console.log(event);
 		let answer = event.target.innerText;
-		
 		setSelectedIndex({value: answer, isHeld: true})
-		
-		// console.log("answer ")
-		// console.log(correct)
-		// console.log(answer)
 	}
 
 
