@@ -8,11 +8,14 @@ const MainComponent = () => {
 	const [quiz, setQuiz] = useState(false);
 	const [questions, setQuestions] = useState([])
 	const [answers, setAnswers] = useState([]);
-	console.log(answers);
+	// const [chosenOption, setChoisenOption] = useState([])
+	const [showResults, setShowResults] = useState(false);
+	const [count, setCount] = useState(0);
+	const [newGame, setNewGame] = useState(false)
 
 	useEffect(() => {
 		getData()
-	}, [])
+	}, [newGame])
 
 	async function getData() {
 		const response = await fetch("https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple");
@@ -32,6 +35,25 @@ const MainComponent = () => {
 		setQuiz(true);
 	}
 
+	
+	const holdAnswer = (event, id) => {
+		console.log(event.target.innerText);
+		console.log('useless fnc for now');
+		let answer = event.target.innerText;
+		if (answer === id) {
+			setCount(prevCount => prevCount + 1);
+		}  
+	}
+	
+	const toggleResult = () => {
+		if (!showResults) {
+			setShowResults(true)
+		} else {
+			setShowResults(false);
+			setNewGame(prevValue => !prevValue);
+		}
+		
+	}
 	const questionsAnswers = questions.map((question) => <Questions
 		key={question.correct_answer}
 		question={question.question}
@@ -39,7 +61,9 @@ const MainComponent = () => {
 			[question.correct_answer, question.incorrect_answers]
 		}
 		correctAnswer={question.correct_answer}
-		
+		holdAnswer={(event) => holdAnswer(event, question.correct_answer)}
+		showResults={showResults}
+		newGame={newGame}
 	
 	/>)
 
@@ -49,9 +73,11 @@ const MainComponent = () => {
 			<div className="main-questions-answers">
 			{questionsAnswers}
 			</div>
-			
 			<div className="container-check-answers-btn">
-				<button className="check-unswers">Check answers</button>
+				{showResults && <h2>You scored {count}/{answers.length} correct answers</h2>}
+				<button className="check-answers"
+				onClick={toggleResult}
+				>{showResults ? "Play again": "Check answers"}</button>
 			</div>
 		</div>
 	)
