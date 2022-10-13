@@ -5,7 +5,11 @@ import { useState, useEffect } from "react";
 
 
 const MainComponent = () => {
-	const [quiz, setQuiz] = useState(false);
+	const [quiz, setQuiz] = useState({
+		firstPage: false,
+		secondPage: true
+	});
+	
 	const [questions, setQuestions] = useState([])
 	const [answers, setAnswers] = useState([]);
 	const [showResults, setShowResults] = useState(false);
@@ -31,7 +35,7 @@ const MainComponent = () => {
 	}
 
 	const startQuiz = () => {
-		setQuiz(true);
+		setQuiz(prevValue => ({...prevValue, firstPage: !prevValue.firstPage, secondPage: !prevValue.secondPage}));
 	}
 
 	
@@ -68,16 +72,16 @@ const MainComponent = () => {
 
 	return (
 		<div className="main-background">
-			{!quiz && <FirstPage startQuiz={startQuiz} />}
+			{!quiz.firstPage && <FirstPage startQuiz={startQuiz} />}
 			<div className="main-questions-answers">
 			{questionsAnswers}
 			</div>
-			<div className="container-check-answers-btn">
+			{!quiz.secondPage && <div className="container-check-answers-btn">
 				{showResults && <h2>You scored {count}/{answers.length} correct answers</h2>}
 				<button className="check-answers"
 				onClick={toggleResult}
 				>{showResults ? "Play again": "Check answers"}</button>
-			</div>
+			</div>}
 		</div>
 	)
 }
